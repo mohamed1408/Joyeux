@@ -4,7 +4,9 @@ import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 
-export default function HomeScreen({ navigation }: RootTabScreenProps<"Home">) {
+export default function MemoriesScreen({
+  navigation,
+}: RootTabScreenProps<"Memories">) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab One</Text>
@@ -13,7 +15,7 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<"Home">) {
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
-      <EditScreenInfo path="/screens/HomeScreen.tsx" />
+      <EditScreenInfo path="/screens/MemoriesScreen.tsx" />
     </View>
   );
 }
