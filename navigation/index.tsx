@@ -60,10 +60,20 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="LogIn">
+      <Stack.Screen
+        name="LogIn"
+        component={LoginScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="OTP"
+        component={OTPScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Root"
-        component={LoginScreen}
+        component={BottomTabNavigator}
         options={{ headerShown: false }}
       />
       <Stack.Screen

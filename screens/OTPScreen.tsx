@@ -5,6 +5,7 @@ import {
   Image,
   Dimensions,
   TextInput,
+  TouchableOpacity,
 } from "react-native";
 import { Feather, AntDesign } from "@expo/vector-icons";
 
@@ -12,13 +13,26 @@ import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View as TView } from "../components/Themed";
 import { RootStackScreenProps } from "../types";
 import images from "../assets/images";
-import { useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { BlurView } from "expo-blur";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const image = { uri: "../" };
 
 export default function OTPScreen({ navigation }: RootStackScreenProps<"OTP">) {
+  let inputRef1 = useRef(null);
+  let inputRef2 = useRef(null);
+  let inputRef3 = useRef(null);
+  let inputRef4 = useRef(null);
+  let inputRef5 = useRef(null);
+
+  const focusNext = (text: any, nextInput: any) => {
+    if (nextInput != null && text) nextInput.current.focus();
+  };
+  const focusPrev = (e: any, prevInput: any) => {
+    if (e.nativeEvent.key == "Backspace" && prevInput != null)
+      prevInput.current.focus();
+  };
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -28,14 +42,122 @@ export default function OTPScreen({ navigation }: RootStackScreenProps<"OTP">) {
       >
         <Image source={images.logo} style={styles.toplogo} />
         <View style={styles.bottomview}>
-          <Text style={styles.titleText}>verify OTP</Text>
+          <Text style={styles.title}>verify OTP</Text>
+          <Text style={styles.subtitle}>
+            We have sent an OTP on{" "}
+            <Feather name="edit-3" size={24} color="#faae1d" />
+            {"\n"}
+            +91 7032112233
+          </Text>
+          {/* <Text style={styles.titleText}>verify OTP</Text>
           <Text style={styles.note1}>
             We have sent an OTP on{" "}
             <Feather name="edit-3" size={24} color="#faae1d" />
-          </Text>
-          <Text style={styles.mobileNo}>+91 7032112233</Text>
+          </Text> */}
+          {/* <Text style={styles.mobileNo}>+91 7032112233</Text> */}
 
-          <BlurView intensity={50} style={styles.blurContainer}>
+          <BlurView intensity={50} style={styles.card}>
+            <View style={styles.cardbody}>
+              <Text style={[styles.cardtitle]}>enter otp</Text>
+              <View style={{ flex: 1, flexDirection: "row" }}>
+                <View style={styles.inputcontainer}>
+                  <TextInput
+                    ref={inputRef1}
+                    selectTextOnFocus={true}
+                    onChangeText={(text) => focusNext(text, inputRef2)}
+                    onKeyPress={(e) => focusPrev(e, null)}
+                    keyboardType="number-pad"
+                    maxLength={1}
+                    style={[styles.input, { flex: 2 }]}
+                  />
+                </View>
+                <View style={styles.inputcontainer}>
+                  <TextInput
+                    ref={inputRef2}
+                    selectTextOnFocus={true}
+                    onChangeText={(text) => focusNext(text, inputRef3)}
+                    onKeyPress={(e) => focusPrev(e, inputRef1)}
+                    keyboardType="number-pad"
+                    maxLength={1}
+                    style={[styles.input, { flex: 2 }]}
+                  />
+                </View>
+                <View style={styles.inputcontainer}>
+                  <TextInput
+                    ref={inputRef3}
+                    selectTextOnFocus={true}
+                    onChangeText={(text) => focusNext(text, inputRef4)}
+                    onKeyPress={(e) => focusPrev(e, inputRef2)}
+                    keyboardType="number-pad"
+                    maxLength={1}
+                    style={[styles.input, { flex: 2 }]}
+                  />
+                </View>
+                <View style={styles.inputcontainer}>
+                  <TextInput
+                    ref={inputRef4}
+                    selectTextOnFocus={true}
+                    onChangeText={(text) => focusNext(text, inputRef5)}
+                    onKeyPress={(e) => focusPrev(e, inputRef3)}
+                    keyboardType="number-pad"
+                    maxLength={1}
+                    style={[styles.input, { flex: 2 }]}
+                  />
+                </View>
+                <View style={styles.inputcontainer}>
+                  <TextInput
+                    ref={inputRef5}
+                    selectTextOnFocus={true}
+                    onChangeText={(text) => focusNext(text, null)}
+                    onKeyPress={(e) => focusPrev(e, inputRef4)}
+                    keyboardType="number-pad"
+                    maxLength={1}
+                    style={[styles.input, { flex: 2 }]}
+                  />
+                </View>
+              </View>
+            </View>
+
+            <View style={styles.cardfooter}>
+              <Text style={styles.verified}>
+                reading OTP <Text style={styles.time}>05:15</Text>
+              </Text>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  padding: 15,
+                }}
+              >
+                <AntDesign
+                  style={styles.messageicon}
+                  name="message1"
+                  size={20}
+                  color="#faae1d"
+                />
+                <Text style={styles.resend}>resend SMS</Text>
+              </View>
+              {/* <TouchableOpacity
+                style={styles.btn}
+                onPress={() => {
+                  navigation.navigate("OTP");
+                }}
+              >
+                <LinearGradient
+                  style={styles.linearbg}
+                  key={"asdsad"}
+                  colors={["#f44e4e", "#fdbe20"]}
+                  start={[0, 1]}
+                  end={[1, 0]}
+                >
+                  <Text style={styles.btntext}>get OTP</Text>
+                </LinearGradient>
+              </TouchableOpacity> */}
+            </View>
+          </BlurView>
+
+          {/* <BlurView intensity={50} style={styles.blurContainer}>
             <View style={styles.whitebox}>
               <Text style={styles.otp}>enter otp</Text>
               <SafeAreaView
@@ -72,7 +194,7 @@ export default function OTPScreen({ navigation }: RootStackScreenProps<"OTP">) {
               />
               <Text style={styles.resend}>resend SMS</Text>
             </View>
-          </BlurView>
+          </BlurView> */}
         </View>
       </ImageBackground>
     </View>
@@ -113,6 +235,21 @@ const styles = StyleSheet.create({
     borderColor: "white",
     width: "100%",
     borderWidth: 0,
+  },
+  title: {
+    color: "white",
+    fontSize: 30,
+    fontWeight: "bold",
+    fontFamily: "questrial-regular",
+    paddingHorizontal: 15,
+  },
+  subtitle: {
+    color: "white",
+    marginTop: 10,
+    fontFamily: "questrial-regular",
+    lineHeight: 20,
+    fontSize: 17,
+    paddingHorizontal: 15,
   },
   titleText: {
     fontSize: 22,
@@ -183,17 +320,81 @@ const styles = StyleSheet.create({
     color: "#faae1d",
     fontWeight: "bold",
   },
+  // input: {
+  //   height: 40,
+  //   width: 38,
+  //   margin: 8,
+  //   borderWidth: 1,
+  //   borderBottomLeftRadius: 8,
+  //   borderBottomRightRadius: 8,
+  //   borderTopLeftRadius: 8,
+  //   borderTopRightRadius: 8,
+  //   backgroundColor: "#eaf4f3",
+  //   borderColor: "#cde8e6",
+  //   elevation: 2,
+  // },
+
+  //from login
+  card: {
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    padding: 15,
+    marginTop: 50,
+    paddingHorizontal: 15,
+  },
+  cardbody: {
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 20,
+  },
+  cardtitle: {
+    color: "#457c78",
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+  inputcontainer: {
+    // borderWidth: 2,
+    // margin: 10,
+    marginVertical: 20,
+    flex: 1,
+    flexDirection: "row",
+  },
   input: {
-    height: 40,
-    width: 38,
-    margin: 8,
-    borderWidth: 1,
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
     backgroundColor: "#eaf4f3",
     borderColor: "#cde8e6",
+    borderWidth: 2,
+    borderRadius: 10,
     elevation: 2,
+    height: 60,
+    width: 60,
+    padding: 20,
+    margin: 5,
+    fontWeight: "bold",
+    fontSize: 20,
+    color: "#00a89b",
+    letterSpacing: 3,
+  },
+  cardfooter: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 25,
+  },
+  btn: {
+    borderColor: "white",
+    borderWidth: 1,
+    borderRadius: 50,
+    width: "80%",
+  },
+  linearbg: {
+    width: "100%",
+    padding: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+  },
+  btntext: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 20,
   },
 });
