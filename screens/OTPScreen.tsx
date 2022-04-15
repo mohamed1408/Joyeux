@@ -26,13 +26,43 @@ export default function OTPScreen({ navigation }: RootStackScreenProps<"OTP">) {
   let inputRef4 = useRef(null);
   let inputRef5 = useRef(null);
 
+  const [otp, setOTP] = useState("");
+  const [verify, setVerify] = useState(0);
+
+  useEffect(() => {
+    console.log(otp)
+    if (otp == "") {
+      setVerify(0);
+    } else if(otp.length == 5){
+      verifyOTP(otp)
+    }
+  });
+
   const focusNext = (text: any, nextInput: any) => {
     if (nextInput != null && text) nextInput.current.focus();
+    if (text) setOTP(otp + text);
+    else setOTP(otp.slice(0, -1));
   };
+
   const focusPrev = (e: any, prevInput: any) => {
     if (e.nativeEvent.key == "Backspace" && prevInput != null)
       prevInput.current.focus();
   };
+
+  const verifyOTP = (otp: string) => {
+    if (otp == "23578") setVerify(2);
+    else {
+      setVerify(1);
+      setTimeout(() => {
+        logIn();
+      }, 500);
+    }
+  };
+
+  const logIn = () => {
+    navigation.navigate("Root");
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -43,12 +73,27 @@ export default function OTPScreen({ navigation }: RootStackScreenProps<"OTP">) {
         <Image source={images.logo} style={styles.toplogo} />
         <View style={styles.bottomview}>
           <Text style={styles.title}>verify OTP</Text>
-          <Text style={styles.subtitle}>
-            We have sent an OTP on{" "}
-            <Feather name="edit-3" size={24} color="#faae1d" />
-            {"\n"}
+          <View style={{flex: 1, flexDirection: 'row', paddingLeft: 15}}>
+            <Text style={styles.subtitle}>We have sent an OTP on </Text>
+            <TouchableOpacity>
+              <Feather name="edit-3" size={24} color="#faae1d" />
+            </TouchableOpacity>
+          </View>
+          <Text
+            style={[
+              styles.subtitle,
+              {
+                fontSize: 20,
+                color: "white",
+                fontWeight: "700",
+                marginTop: 10, 
+                paddingLeft: 15                
+              },
+            ]}
+          >
             +91 7032112233
           </Text>
+
           {/* <Text style={styles.titleText}>verify OTP</Text>
           <Text style={styles.note1}>
             We have sent an OTP on{" "}
@@ -63,6 +108,7 @@ export default function OTPScreen({ navigation }: RootStackScreenProps<"OTP">) {
                 <View style={styles.inputcontainer}>
                   <TextInput
                     ref={inputRef1}
+                    value={otp[0]}
                     selectTextOnFocus={true}
                     onChangeText={(text) => focusNext(text, inputRef2)}
                     onKeyPress={(e) => focusPrev(e, null)}
@@ -74,6 +120,7 @@ export default function OTPScreen({ navigation }: RootStackScreenProps<"OTP">) {
                 <View style={styles.inputcontainer}>
                   <TextInput
                     ref={inputRef2}
+                    value={otp[1]}
                     selectTextOnFocus={true}
                     onChangeText={(text) => focusNext(text, inputRef3)}
                     onKeyPress={(e) => focusPrev(e, inputRef1)}
@@ -85,6 +132,7 @@ export default function OTPScreen({ navigation }: RootStackScreenProps<"OTP">) {
                 <View style={styles.inputcontainer}>
                   <TextInput
                     ref={inputRef3}
+                    value={otp[2]}
                     selectTextOnFocus={true}
                     onChangeText={(text) => focusNext(text, inputRef4)}
                     onKeyPress={(e) => focusPrev(e, inputRef2)}
@@ -96,6 +144,7 @@ export default function OTPScreen({ navigation }: RootStackScreenProps<"OTP">) {
                 <View style={styles.inputcontainer}>
                   <TextInput
                     ref={inputRef4}
+                    value={otp[3]}
                     selectTextOnFocus={true}
                     onChangeText={(text) => focusNext(text, inputRef5)}
                     onKeyPress={(e) => focusPrev(e, inputRef3)}
@@ -107,6 +156,7 @@ export default function OTPScreen({ navigation }: RootStackScreenProps<"OTP">) {
                 <View style={styles.inputcontainer}>
                   <TextInput
                     ref={inputRef5}
+                    value={otp[4]}
                     selectTextOnFocus={true}
                     onChangeText={(text) => focusNext(text, null)}
                     onKeyPress={(e) => focusPrev(e, inputRef4)}
@@ -119,25 +169,60 @@ export default function OTPScreen({ navigation }: RootStackScreenProps<"OTP">) {
             </View>
 
             <View style={styles.cardfooter}>
-              <Text style={styles.verified}>
-                reading OTP <Text style={styles.time}>05:15</Text>
-              </Text>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  padding: 15,
-                }}
-              >
-                <AntDesign
-                  style={styles.messageicon}
-                  name="message1"
-                  size={20}
-                  color="#faae1d"
-                />
-                <Text style={styles.resend}>resend SMS</Text>
-              </View>
+              {verify == 0 && (
+                <Text style={styles.verified}>
+                  reading OTP <Text style={styles.time}>05:15</Text>
+                </Text>
+              )}
+              {verify == 1 && (
+                <Text
+                  style={[
+                    styles.verified,
+                    { color: "#00ac00", fontSize: 15, fontWeight: "600" },
+                  ]}
+                >
+                  OTP verified!
+                </Text>
+              )}
+              {verify == 2 && (
+                <Text style={[styles.verified, { color: "red" }]}>
+                  invalid OTP
+                </Text>
+              )}
+              {[0, 2].includes(verify) && (
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    padding: 15,
+                  }}
+                >
+                  <AntDesign
+                    style={styles.messageicon}
+                    name="message1"
+                    size={20}
+                    color="#faae1d"
+                  />
+                  <TouchableOpacity>
+                    <Text style={styles.resend}>resend SMS</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+              {[1].includes(verify) && (
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    padding: 15,
+                  }}
+                >
+                  <Text style={[styles.verified, { color: "white" }]}>
+                    please wait...
+                  </Text>
+                </View>
+              )}
               {/* <TouchableOpacity
                 style={styles.btn}
                 onPress={() => {
@@ -235,21 +320,23 @@ const styles = StyleSheet.create({
     borderColor: "white",
     width: "100%",
     borderWidth: 0,
+    padding: 20,
+    paddingBottom: 0,
   },
   title: {
     color: "white",
     fontSize: 30,
     fontWeight: "bold",
     fontFamily: "questrial-regular",
-    paddingHorizontal: 15,
+    paddingLeft: 15,
   },
   subtitle: {
     color: "white",
     marginTop: 10,
     fontFamily: "questrial-regular",
-    lineHeight: 20,
+    // lineHeight: 20,
     fontSize: 17,
-    paddingHorizontal: 15,
+    // paddingHorizontal: 15,
   },
   titleText: {
     fontSize: 22,
@@ -365,9 +452,9 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 10,
     elevation: 2,
-    height: 60,
-    width: 60,
-    padding: 20,
+    height: 50,
+    width: 50,
+    padding: 15,
     margin: 5,
     fontWeight: "bold",
     fontSize: 20,
