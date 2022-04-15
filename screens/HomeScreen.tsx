@@ -322,7 +322,6 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<"Home">) {
             style={{
               width: "95%",
               height: 90,
-              padding: 15,
               justifyContent: "center",
               alignItems: "center",
               borderBottomLeftRadius: 20,
@@ -334,110 +333,7 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<"Home">) {
             }}
             key={"asdsad"}
             colors={["#00ad9f", "#008b80"]}
-          >
-            <View
-              style={{
-                flex: 1,
-                height: 90,
-                borderBottomLeftRadius: 20,
-                borderTopLeftRadius: 60,
-              }}
-            >
-              <LinearGradient
-                style={{
-                  width: "100%",
-                  height: 90,
-                  padding: 15,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderBottomLeftRadius: 20,
-                  borderTopLeftRadius: 60,
-                  position: "absolute",
-                }}
-                key={"asdsad"}
-                colors={["#00ad9f", "#008b80"]}
-              ></LinearGradient>
-            </View>
-            <View style={{ flex: 1, height: 90 }}>
-              <LinearGradient
-                style={{
-                  width: "100%",
-                  height: 90,
-                  padding: 15,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  position: "absolute",
-                  borderTopRightRadius: 10,
-                }}
-                key={"asdsad"}
-                colors={["#00ad9f", "#008b80"]}
-              ></LinearGradient>
-            </View>
-            <View style={{ flex: 1, height: 90 }}>
-              <LinearGradient
-                style={{
-                  width: "100%",
-                  height: 90,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  position: "absolute",
-                  backgroundColor: "white",
-                }}
-                key={"asdsad"}
-                colors={["#00ad9f", "#008b80"]}
-              >
-                <TouchableOpacity
-                  style={{
-                    position: "absolute",
-                    top: -50,
-                    backgroundColor: "white",
-                    borderRadius: 50,
-                    padding: 26,
-                  }}
-                >
-                  <Ionicons name="ios-gift-outline" size={30} color="black" />
-                </TouchableOpacity>
-              </LinearGradient>
-            </View>
-            <View style={{ flex: 1, height: 90 }}>
-              <LinearGradient
-                style={{
-                  width: "100%",
-                  height: 90,
-                  padding: 15,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  position: "absolute",
-                  borderTopLeftRadius: 10,
-                }}
-                key={"asdsad"}
-                colors={["#00ad9f", "#008b80"]}
-              ></LinearGradient>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                height: 90,
-                borderBottomRightRadius: 20,
-                borderTopRightRadius: 60,
-              }}
-            >
-              <LinearGradient
-                style={{
-                  width: "100%",
-                  height: 90,
-                  padding: 15,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderBottomRightRadius: 20,
-                  borderTopRightRadius: 60,
-                  position: "absolute",
-                }}
-                key={"asdsad"}
-                colors={["#00ad9f", "#008b80"]}
-              ></LinearGradient>
-            </View>
-          </LinearGradient>
+          ></LinearGradient>
         </View>
       </ImageBackground>
     </View>
