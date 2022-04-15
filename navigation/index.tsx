@@ -5,6 +5,7 @@
  */
 import {
   FontAwesome,
+  Ionicons,
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
@@ -15,8 +16,16 @@ import {
   DarkTheme,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { BlurView } from "expo-blur";
+import { LinearGradient } from "expo-linear-gradient";
 import * as React from "react";
-import { ColorSchemeName, Pressable } from "react-native";
+import {
+  ColorSchemeName,
+  Dimensions,
+  Pressable,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
@@ -36,6 +45,8 @@ import {
   RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
+import * as shape from "d3-shape";
+import NameScreen from "../screens/NameScreen";
 
 export default function Navigation({
   colorScheme,
@@ -72,8 +83,13 @@ function RootNavigator() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Root"
-        component={BottomTabNavigator}
+        name="Name"
+        component={NameScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -94,14 +110,85 @@ function RootNavigator() {
  */
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
+const GiftIcon = () => (
+  <TouchableOpacity>
+    <Ionicons name="ios-gift-outline" size={24} color="black" />
+  </TouchableOpacity>
+);
+const getPath = (): string => {
+  const { width, height } = Dimensions.get("window");
+  const tabWidth = width / 5;
+  const left = shape
+    .line()
+    .x((d) => d[0])
+    .y((d) => d[1])([
+    [0, 0],
+    [width, 0],
+  ]);
+  const tab = shape
+    .line()
+    .x((d) => d[0])
+    .y((d) => d[1])
+    .curve(shape.curveBasis)([
+    [width, 0],
+    [width + 5, 0],
+    [width + 10, 10],
+    [width + 15, height],
+    [width + tabWidth - 15, height],
+    [width + tabWidth - 10, 10],
+    [width + tabWidth - 5, 0],
+    [width + tabWidth, 0],
+  ]);
+  const right = shape
+    .line()
+    .x((d) => d[0])
+    .y((d) => d[1])([
+    [width + tabWidth, 0],
+    [width * 2, 0],
+    [width * 2, height],
+    [0, height],
+    [0, 0],
+  ]);
+  return `${left} ${tab} ${right}`;
+};
 function BottomTabNavigator() {
+  // console.log(Dimensions.get("window"), getPath());
   const colorScheme = useColorScheme();
 
   return (
     <BottomTab.Navigator
       initialRouteName="TabOne"
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
+        tabBarActiveTintColor: "white", //Colors[colorScheme].tint,
+        tabBarInactiveTintColor: "white",
+        tabBarStyle: {
+          position: "absolute",
+          bottom: 3,
+          marginHorizontal: 20,
+          height: 75,
+          borderBottomLeftRadius: 20,
+          borderBottomRightRadius: 20,
+          borderTopLeftRadius: 50,
+          borderTopRightRadius: 50,
+        },
+        tabBarItemStyle: { paddingVertical: 10 },
+        tabBarBackground: () => (
+          <LinearGradient
+            style={{
+              width: "100%",
+              height: "100%",
+              padding: 15,
+              justifyContent: "center",
+              alignItems: "center",
+              borderBottomLeftRadius: 20,
+              borderBottomRightRadius: 20,
+              borderTopLeftRadius: 50,
+              borderTopRightRadius: 50,
+            }}
+            key={"asdsad"}
+            colors={["#00ad9f", "#008b80"]}
+          />
+        ),
       }}
     >
       {/* <BottomTab.Screen
@@ -133,6 +220,7 @@ function BottomTabNavigator() {
         options={{
           title: "Home",
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          // tabBarItemStyle: { borderWidth: 1 },
         }}
       />
       <BottomTab.Screen
@@ -141,6 +229,27 @@ function BottomTabNavigator() {
         options={{
           title: "Portfolio",
           tabBarIcon: ({ color }) => <TabBarIcon name="money" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="SendGift"
+        component={GiftIcon}
+        options={{
+          title: "send gift",
+          tabBarIcon: ({ color }) => (
+            <TouchableOpacity
+              style={{
+                position: "absolute",
+                top: -50,
+                backgroundColor: "white",
+                // borderWidth: 1,
+                borderRadius: 50,
+                padding: 20,
+              }}
+            >
+              <Ionicons name="ios-gift-outline" size={30} color="black" />
+            </TouchableOpacity>
+          ),
         }}
       />
       <BottomTab.Screen

@@ -47,7 +47,12 @@ export default function LoginScreen({
             </View>
 
             <View style={styles.cardfooter}>
-              <TouchableOpacity style={styles.btn} onPress={() => {navigation.navigate('OTP')}}>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => {
+                  navigation.navigate("OTP");
+                }}
+              >
                 <LinearGradient
                   style={styles.linearbg}
                   key={"asdsad"}

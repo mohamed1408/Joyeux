@@ -30,11 +30,11 @@ export default function OTPScreen({ navigation }: RootStackScreenProps<"OTP">) {
   const [verify, setVerify] = useState(0);
 
   useEffect(() => {
-    console.log(otp)
+    console.log(otp);
     if (otp == "") {
       setVerify(0);
-    } else if(otp.length == 5){
-      verifyOTP(otp)
+    } else if (otp.length == 5) {
+      verifyOTP(otp);
     }
   });
 
@@ -60,7 +60,7 @@ export default function OTPScreen({ navigation }: RootStackScreenProps<"OTP">) {
   };
 
   const logIn = () => {
-    navigation.navigate("Root");
+    navigation.navigate("Name");
   };
 
   return (
@@ -73,7 +73,7 @@ export default function OTPScreen({ navigation }: RootStackScreenProps<"OTP">) {
         <Image source={images.logo} style={styles.toplogo} />
         <View style={styles.bottomview}>
           <Text style={styles.title}>verify OTP</Text>
-          <View style={{flex: 1, flexDirection: 'row', paddingLeft: 15}}>
+          <View style={{ flex: 1, flexDirection: "row", paddingLeft: 15 }}>
             <Text style={styles.subtitle}>We have sent an OTP on </Text>
             <TouchableOpacity>
               <Feather name="edit-3" size={24} color="#faae1d" />
@@ -86,8 +86,8 @@ export default function OTPScreen({ navigation }: RootStackScreenProps<"OTP">) {
                 fontSize: 20,
                 color: "white",
                 fontWeight: "700",
-                marginTop: 10, 
-                paddingLeft: 15                
+                marginTop: 10,
+                paddingLeft: 15,
               },
             ]}
           >
