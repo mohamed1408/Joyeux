@@ -5,6 +5,7 @@ import {
   FontAwesome5,
   Ionicons,
   MaterialCommunityIcons,
+  MaterialIcons,
   SimpleLineIcons,
 } from "@expo/vector-icons";
 import React from "react";
@@ -307,6 +308,66 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<"Home">) {
               </View>
             </View>
           </BlurView>
+
+          <BlurView intensity={50} style={[styles.card, { maxHeight: 110 }]}>
+            <View style={styles.cardbody}>
+              <View
+                style={{
+                  flex: 1,
+                  //   borderWidth: 1,
+                  borderTopLeftRadius: 20,
+                  borderBottomLeftRadius: 20,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesome5 name="money-bill-alt" size={30} color="#fa9830" />
+              </View>
+              <View
+                style={{
+                  flex: 3,
+                  //   borderWidth: 1,
+                  borderTopRightRadius: 20,
+                  borderBottomRightRadius: 20,
+                  padding: 5,
+                }}
+              >
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: 17,
+                    color: "#00a89b",
+                    fontFamily: "questrial-regular",
+                    // letterSpacing: 1,
+                  }}
+                >
+                  Setup Auto-Savings
+                </Text>
+                <Text
+                  style={{
+                    // fontWeight: "bold",
+                    fontSize: 15,
+                    fontFamily: "questrial-regular",
+                    // color: "#00a89b",
+                    // letterSpacing: 1,
+                  }}
+                >
+                  Auto Save your roundup of daily expenses
+                </Text>
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                  borderTopRightRadius: 20,
+                  borderBottomRightRadius: 20,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <AntDesign name="arrowright" size={30} color="#fa9830" />
+              </View>
+            </View>
+          </BlurView>
         </View>
         <View
           style={{
@@ -322,6 +383,8 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<"Home">) {
             style={{
               width: "95%",
               height: 90,
+              flex: 1,
+              flexDirection: "row",
               justifyContent: "center",
               alignItems: "center",
               borderBottomLeftRadius: 20,
@@ -333,7 +396,38 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<"Home">) {
             }}
             key={"asdsad"}
             colors={["#00ad9f", "#008b80"]}
-          ></LinearGradient>
+          >
+            <View style={styles.tabIcon}>
+              <MaterialCommunityIcons name="home" size={30} color={"white"} />
+              <Text style={{ color: "white" }}>home</Text>
+            </View>
+            <View style={styles.tabIcon}>
+              <FontAwesome name="money" size={30} color="white" />
+              <Text style={{ color: "white" }}>portfolio</Text>
+            </View>
+            <View style={styles.tabIconMiddle}>
+              <View style={styles.absoluteIcon}>
+                <MaterialCommunityIcons name="gift" size={50} color={"white"} />
+              </View>
+              <Text
+                style={{ color: "white", position: "absolute", bottom: -25 }}
+              >
+                send gift
+              </Text>
+            </View>
+            <View style={styles.tabIcon}>
+              <MaterialIcons name="event" size={30} color={"white"} />
+              <Text style={{ color: "white" }}>events</Text>
+            </View>
+            <View style={styles.tabIcon}>
+              <MaterialCommunityIcons
+                name="balloon"
+                size={30}
+                color={"white"}
+              />
+              <Text style={{ color: "white" }}>memories</Text>
+            </View>
+          </LinearGradient>
         </View>
       </ImageBackground>
     </View>
@@ -464,5 +558,27 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     fontSize: 15,
+  },
+  tabIcon: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  tabIconMiddle: {
+    flex: 1.5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  absoluteIcon: {
+    position: "absolute",
+    top: -100,
+    backgroundColor: "#f87b3b",
+    borderRadius: 50,
+    padding: 20,
+    borderWidth: 1,
+    borderColor: "white",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
